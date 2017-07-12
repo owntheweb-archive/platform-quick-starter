@@ -1,9 +1,11 @@
 # platform-quick-starter
 This is a quick starter guide to working with platform.sh hosted projects.
 
-IMPORTANT: This document is a work-in-progress. Feedback is welcome.
+## Important Notes
 
-## Official Docs
+This document is not endorsed platform.sh team gurus. It's a work-in-progress. Feedback and contributions are welcome.
+
+## Official Documentation
 
 The official platform.sh docs are very helpful. Start here and read through it:
 

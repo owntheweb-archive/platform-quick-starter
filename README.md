@@ -32,7 +32,7 @@ Add MAMP's PHP to the PATH variable on any line before `export PATH` (adjust "ph
 
 `PATH="/Applications/MAMP/bin/php/php7.1.1/bin:$PATH"`
 
-If you don't see an "export PATH", add this line to the bottom of the file:
+If not seeing an "export PATH", add this line to the bottom of the file:
 
 `export PATH`
 
@@ -90,7 +90,7 @@ http://docs.drush.org/en/8.x/
 A version of this is pre-installed on a Mac with no action required to start.
 
 ### platform CLI
-Install the platform command line interface (CLI), which will let you join the cool kids and make hosting things happen with a few keystrokes. Most hosting tasks are developer centric with the most useful features found in the CLI (not the web admin UI).
+Install the platform command line interface (CLI), joining the cool kids and make hosting things happen with a few keystrokes. Most hosting tasks are developer centric with the most useful features found in the CLI (not the web admin UI).
 https://docs.platform.sh/overview/cli.html
 
 For ease of use, add platform CLI to user profile path:
@@ -99,7 +99,7 @@ For ease of use, add platform CLI to user profile path:
 
 Add platform CLI to path on any line above `export PATH`
 
-`PATH="/Users/YOURUSERNAME/.platformsh/bin:$PATH"`
+`PATH="/Users/USERNAME/.platformsh/bin:$PATH"`
 
 Completely close out of terminal and re-open or force terminal to re-read profile settings with:
 
@@ -336,6 +336,5 @@ todo: add to .gitignore
 ## Todo
 
 - Include a note about sync (haven't tried it yet, heard it's cool)
-- Make point of view consistent (you, me, chris, *third person*)
 - Add more "Cool Random Stuff"
 - Everything else that is being forgotten...

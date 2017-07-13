@@ -1,5 +1,5 @@
-# platform-quick-starter
-This is a quick starter guide to working with platform.sh hosted projects.
+# Platform Quick Starter
+This is a quick starter guide to working with platform.sh hosted projects. At the moment this is focused on Mac users deploying Drupal projects.
 
 ## Important Notes
 

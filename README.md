@@ -246,13 +246,31 @@ Check out the site once the environment has been rebuilt and launched. To list a
 
 A few URLs will be listed. Type 0 and hit return to start. It will launch the environment's website in the default browser. This can also be found in the online admin interface if preferred.
 
+## Make a Snapshot (backup)
+
+Before merging the feature branch into the parent branch, it may be a good idea to make a backup of the parent environment which includes files and database. Snapshots are stored on Platform for 7 days and are helpful in case something goes wrong.
+
+Checkout the parent branch associated with the environment that needs a snapshot, e.g.:
+
+`git checkout master`
+
+Make a snapshot:
+
+`platform snapshot:create`
+
+Return to the Git feature branch that will be merged:
+
+`git checkout twitter-bootstrap-install`
+
 ## Merge Feature Branch to Master (Live) or Parent Branch
 
 Once the feature is complete, approved and ready to merge with the parent branch, initiate a platform merge. This will also redeploy the parent environment (without downtime):
 
+`platform e:merge`
+
 Type in 'Y' and hit return to confirm the merge.
 
-Note about databases: As with most hosting solutions and development workflows, code updates will not affect the parent environment database. Any database configurations and content (usually set when logged into Drupal) will need to be re-applied to the parent environment website.
+Note about databases: As with most hosting solutions and development workflows, Git-related code updates will not affect the parent environment database (or any database). Database configurations and content (usually set when logged into Drupal) will need to be reapplied to the parent environment website.
 
 ## Delete Feature platform Environment
 

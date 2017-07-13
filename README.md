@@ -246,6 +246,12 @@ Check out the site once the environment has been rebuilt and launched. To list a
 
 A few URLs will be listed. Type 0 and hit return to start. It will launch the environment's website in the default browser. This can also be found in the online admin interface if preferred.
 
+## Syncing Non-Git Files and Data with Parent Environment
+
+While working on a feature, it may be desired to update non-get files and database from the parent environment for example, to get the latest news posts with their uploaded photos. Confirmations to sync database and files are given separately, so one or the other or both can be synced.
+
+`platform e:sync`
+
 ## Make a Snapshot (backup)
 
 Before merging the feature branch into the parent branch, it may be a good idea to make a backup of the parent environment which includes files and database. Snapshots are stored on Platform for 7 days and are helpful in case something goes wrong.
@@ -335,6 +341,5 @@ todo: add to .gitignore
 
 ## Todo
 
-- Include a note about sync (haven't tried it yet, heard it's cool)
 - Add more "Cool Random Stuff"
 - Everything else that is being forgotten...

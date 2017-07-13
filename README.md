@@ -337,7 +337,22 @@ git push
 
 ### Prevent Database Dumps From Getting Committed
 
-todo: add to .gitignore
+Open the .gitignore file for the project:
+
+`nano .gitignore`
+
+If it doesn't already exist, add the following line and save:
+
+`*.sql`
+
+Commit the change:
+
+```
+git add .gitignore
+git commit -m "Ignore DB Dumps created via platform db:dumb"
+git pull
+git push
+```
 
 ## Todo
 

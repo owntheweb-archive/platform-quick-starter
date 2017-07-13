@@ -248,13 +248,11 @@ A few URLs will be listed. Type 0 and hit return to start. It will launch the en
 
 ## Merge Feature Branch to Master (Live) or Parent Branch
 
-Once the feature is complete, approved and ready to merge with the parent branch, initiate a platform merge. This also eliminates the feature environment to free up hosting resources (cap on active environments per hosting plan options):
-
-`platform e:merge` CHECK THIS: Chris doesn't recall if this actually deletes an environment. Need to test.
+Once the feature is complete, approved and ready to merge with the parent branch, initiate a platform merge. This will also redeploy the parent environment (without downtime):
 
 Type in 'Y' and hit return to confirm the merge.
 
-Note: As with most hosting solutions and development workflows, code updates will not affect the parent environment database. Any database configurations and content (usually set when logged into Drupal) will need to be re-applied to the parent environment website.
+Note about databases: As with most hosting solutions and development workflows, code updates will not affect the parent environment database. Any database configurations and content (usually set when logged into Drupal) will need to be re-applied to the parent environment website.
 
 ## Delete Feature platform Environment
 
@@ -262,9 +260,9 @@ Make sure to locally checkout the branch that has a remote environment that need
 
 'git checkout twitter-bootstrap-install'
 
-Then, use platform to delete the remote environment. This will not delete the remote or local Git branch, only the running environment to save on available hosting plan resources (can be reactivated anytime with unlimited offline branches).
+Then, use platform to delete the remote environment. This will not delete the remote or local Git branch (if adding `--no-delete-branch` option), only the running environment to save on available hosting plan resources (can be reactivated anytime).
 
-`platform e:delete` (CHECK THIS: untested)
+`platform e:delete --no-delete-branch`
 
 The local branch will still be checked out. Switch to master locally with:
 
@@ -273,6 +271,15 @@ The local branch will still be checked out. Switch to master locally with:
 Also a good habit to ensure all is up-to-date locally before proceeding with another feature branch, etc.:
 
 `git pull`
+
+### Activate Environment for Existing Offline Remote Branch
+
+If a Platform environment has been deleted and needs reactivated and/or any remote repository offline branch needs to have an active environment, checkout the local branch and activate with:
+
+```
+git checkout the-feature-branch
+platform e:activate
+```
 
 ## Cool Random Stuff
 
@@ -313,5 +320,4 @@ todo: add to .gitignore
 - Include a note about sync (haven't tried it yet, heard it's cool)
 - Make point of view consistent (you, me, chris, *third person*)
 - Add more "Cool Random Stuff"
-- Fill in "CHECK THIS" items and test.
 - Everything else that is being forgotten...

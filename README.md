@@ -44,7 +44,7 @@ Test php version (should NOT be 5.x, SHOULD be 7.x)
 
 `php -v`
 
-###Mac Users: Make MAMP's mysql useable in terminal as it is not available by default
+### Mac Users: Make MAMP's mysql useable in terminal as it is not available by default
 
 Edit user profile file:
 
@@ -58,7 +58,11 @@ Completely close out of terminal and re-open or force terminal to re-read profil
 
 `source ~/.profile`
 
-Test php version (should NOT be 5.x, SHOULD be 7.x)
+Test:
+
+`mysql`
+
+It should print out general information. Type `quit` and return to exit.
 
 ### SSH Access
 Setup RSA Keys and sync with platform.sh
@@ -81,7 +85,7 @@ Then proceed with instructions at:
 https://getcomposer.org/download/
 
 ### Drush
-Drush is handy for clearing Drupal cache via Terminal among many other tasks. For this startup guide, drush will be installed locally to the website. See setup instructions below. Full details:
+Drush is handy for clearing Drupal cache via Terminal among many other tasks. Great news: Drush is pre-installed with any local platform website install. More on Drush:
 http://docs.drush.org/en/8.x/
 
 ### rsync
@@ -111,12 +115,10 @@ Test installation with:
 
 platform primarily works through Git with additional features available through the platform command. Use platform command to accelerate Git items and access databases (and more!).
 
-Move to a directory where you will clone a website from a remote environment.
+Move to a directory where you will clone a website from a remote environment. For example:
 
 ```
-cd ~/Documents/
-mkdir thewebsite.org
-cd thewebsite.org
+cd ~/Documents
 ```
 
 Get a list of projects that live at platform.sh
@@ -134,12 +136,6 @@ cd FOLDERNAME
 platform build
 ```
 
-Install drush locally by running:
-
-`composer require drush/drush`
-
-Setup a database in MAMP at http://localhost:8888/phpMyAdmin/ . In this example, a database was created named platform_website_org.
-
 Download the remote database. 
 
 `platform db:dump`
@@ -150,11 +146,11 @@ Find the file that was downloaded using ls:
 
 Example file: "PROJECTIDHERE--master--app--dump.sql"
 
-Create a local database to use for the site (skip if one is already created):
+Create a local database to use for the site:
 
 `mysql -u root -proot -e "create database platform_website_org";`
 
-To check if the database exists:
+Check if the database exists:
 
 `mysql -u root -proot -e "show databases";`
 
@@ -162,7 +158,7 @@ Then overwrite local database with (altering to taste first) with:
 
 `mysql -u root -proot platform_website_org < PROJECTIDHERE--master--app--dump.sql`
 
-Enable local configuration settings by copying the local example settings file. Note: This will not be available for Git inclusion (pre-excluded for local flexibility and security):
+Enable local configuration settings by copying the local example settings file. Note: This will not be available for Git inclusion (pre-excluded for local flexibility and security). Be aware that the example.settings.local.php file includes various flags and toggles to force Drupal into debug mode. That's a good thing a majority of the time. Configuration can also be altered as needed:
 
 `cp web/sites/example.settings.local.php web/sites/default/settings.local.php`
 
@@ -214,11 +210,20 @@ Pull the latest and greatest from remote current environment
 
 `git pull`
 
-Tell platform to create a new branch of the master environment. This will also auto-run `git branch your-feature` locally and check it out/set as active branch (`git checkout twitter-bootstrap-install` otherwise if just returning to make continued edits).
+Tell platform to create a new branch of the master environment. This will also auto-run `git branch your-feature` locally and check it out/set as active branch (`git checkout twitter-bootstrap-install`).
 
 `platform e:branch twitter-bootstrap-install`
 
-Make some worthy file changes. In this example, I installed twitter bootstrap theme using composer. This could also be done locally by logging into the site and adding via the Drupal site admin area or by visiting the Drupal site, locating a module, downloading, extracting files where they belong (but the following one liner saves time):
+If the branch was already created locally before running the above line, the following example steps would activate a platform environment:
+
+```
+git checkout twitter-bootstrap-install
+git push
+platform e:activate
+
+```
+
+Make a few worthy file changes. In this example, I installed twitter bootstrap theme using composer. This could also be done locally by logging into the site and adding via the Drupal site admin area or by visiting the Drupal site, locating a module, downloading, extracting files where they belong (but the following one liner saves time and works better with great platform Composer features, less code to commit):
 
 `composer require drupal/bootstrap`
 
@@ -226,17 +231,25 @@ To see what changes were made that need to be committed, the following command m
 
 `git diff`
 
-git add commands could be executed for each file individually, or all added in one go with:
+Git add commands could be executed for each file individually, or all added in one go with:
 
 `git add .`
 
-commit changes with helpful message:
+For a more interactive approach with detailed options of what/what not to stage:
+
+`git add -p`
+
+Commit changes with helpful message:
 
 `git commit -m "Installed Twitter Bootstrap"`
 
-Push the changes to a new environment on platform.sh. Note: New environments are charged at $21/3 environments. **CHECK THIS**: Chris thinks this is prorated though, not incurring much cost if a quick test and merge that removed the branch/environment when finished.
+Push the changes to the environment on platform.sh. 
 
 `git push`
+
+While working, it may be desired to sync files and/or data with from the platform environment with the local environment. This can be achieved with:
+
+`platform e:sync` (CHECK THIS: Chris hasn't tested or fully read instructions yey)
 
 Check out the site once the environment has been re-built and launched. To list available URLs for the current environment, type:
 
@@ -244,9 +257,7 @@ Check out the site once the environment has been re-built and launched. To list 
 
 It will list a few. Type 0 and hit return to start. It will launch the website in the browser. This can also be found in the online admin interface if preferred.
 
-## Merge Feature Branch to Master Branch (live site)
-
-IMPORTANT: We may create a staging/testing branch in the near future to ensure all is good before going to the live site. This may or may not be needed. Standby for updates.
+## Merge Feature Branch to Master (Live) or Parent Branch
 
 If the feature is complete, approved and ready to merge with the parent branch, which also eliminates the extra environment, do this:
 
@@ -256,21 +267,19 @@ It will ask if you really want to proceed. If this is the case, type in 'Y' and 
 
 Note: As with most hosting environments, code updates like this will not affect the parent environment database. Any database configurations and content (usually set when logged into Drupal) will need to be re-applied there.
 
-IF and ONLY IF you no longer need the feature environment, delete it to save on costs. We pay $21/month for three environments (prorated Chris thinks).
-
-First, make sure to locally checkout the environment that needs to be deleted. Example:
+Make sure to locally checkout the branch that has a remote environment that needs to be deleted. Example:
 
 'git checkout twitter-bootstrap-install'
 
-Then, use platform to delete the remote environment.
+Then, use platform to delete the remote environment. This will not delete the remote Git branch, only the running environment to save on available hosting plan resources (can be reactivated anytime with unlimited offline branches).
 
-`platform e:delete`
+`platform e:delete` (CHECK THIS: Will not delete remote Git branch?)
 
-You'll still have the local branch. You can switch to master locally next:
+You'll still have the local branch as well. You can switch to master locally next:
 
 `git checkout master`
 
-Also as good habit:
+Also a good habit to ensure all is up-to-date locally:
 
 `git pull`
 
@@ -299,7 +308,19 @@ Then:
 
 ```
 git add composer.lock
-git commit -m "Updated all the things with one line!
+git commit -m "Updated all the things with one line!"
 git pull
 git push
 ```
+
+### Prevent Database Dumps From Getting Committed
+
+todo: add to .gitignore
+
+## Todo
+
+- Make point of view consistent (you, me, chris, *third person*)
+- Add more "Cool Random Stuff"
+- Take out opinions/personal preferences or better describe options
+- Fill in "CHECK THIS" items and test.
+- Everything else that is being forgotten...
